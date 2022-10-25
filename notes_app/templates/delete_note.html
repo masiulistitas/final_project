@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row d-flex justify-content-center" style="width: 100%;">
+
+    <div class="col-md-8 col-lg-6">
+        <form action="" method="POST">
+            {% csrf_token %}
+            <br><br>
+            <div role="alert">
+                Are you sure you want to delete "{{ notes.title }}"?
+            </div><br>
+            <p>
+                <a href="{% url 'notes' %}">Go back</a>
+            </p><br>
+
+            <p>
+                <input class="btn btn-primary" type="submit" value="Confirm">
+            </p>
+        </form>
+    </div>
+</div>
+{% endblock content %}

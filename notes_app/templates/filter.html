@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% block content %}
+
+
+<div class="row d-flex justify-content-center" style="width: 95%; margin:0 auto;">
+    <div class="">
+        <br>
+        <form action="{% url 'search' %}" method="get" class="form-inline d-flex">
+            <input name="query" class="form-control mr-sm-1 mr-5" type="text" placeholder="Search by note title..."
+                   aria-label="Search">
+            <button class="btn btn-outline-success my-sm-0 ml-2 button-margin" type="submit">Search</button>
+        </form>
+        <br>
+        <h4>Filter results...</h4>
+        <br>
+        {% if categories %}
+        <a href="{% url 'notes' %}" style="text-decoration:none;">Go back to notes.</a>
+        <br>
+        <br>
+        {% endif %}
+
+        <div class="card mb-4" style="background-color:#F8F8FF;">
+            {% if obj.notes.all %}
+            {% for note in obj.notes.all %}
+            <div class="card-body">
+                <p class="small" style="font-size:0.8rem;">{{ note.category.name }}</p>
+                <p>Title: {{ note.title }}</p>
+                <p>Note: {{ note.content }}</p>
+
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-row align-items-center">
+                        <img src="/media/{{ note.image }}" alt="avatar" width="65"
+                             height="65"/>
+                    </div>
+                    <div class="d-flex flex-row align-items-center">
+                        <a href="{% url 'edit_note' note.id %}" class="small text-muted mb-0">Edit</a>
+                        <p class="small text-muted mb-0">&nbsp&nbsp/&nbsp&nbsp</p>
+                        <a href="{% url 'delete_note' note.id %}">Remove</a>
+                    </div>
+
+                </div>
+
+            </div>
+            <hr>
+            {% endfor %}
+        </div>
+
+    </div>
+</div>
+</form>
+</div>
+
+</div>
+{% else %}
+<p>Nothing here! Please create some notes in this category.</p>
+{% endif %}
+
+{% endblock %}

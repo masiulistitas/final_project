@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% block content %}
+
+
+<div class="row d-flex justify-content-center" style="width: 95%; margin:0 auto;">
+    <div class=""><br>
+        <h4>Search bar...</h4>
+        <form action="{% url 'search' %}" method="get" class="form-inline d-flex">
+            <input name="query" class="form-control mr-sm-1 mr-5" type="text" placeholder="Search by note title..."
+                   aria-label="Search">
+            <button class="btn btn-primary my-sm-0 ml-2 button-margin" type="submit">Search</button>
+        </form><br>
+
+        <h4>Add some notes...</h4>
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="card shadow-0 border " style="background-color:#F8F8FF;">
+                {{ form }}
+                <br>
+                <input type="submit" class="btn btn-primary">
+            </div>
+            </form>
+            <br>
+        {% if notes %}
+            <h4>Your notes...</h4>
+            <div class="card mb-4" style="background-color:#F8F8FF;">
+                {% for note in notes %}
+                <div class="card-body">
+                    <p class="small" style="font-size:0.8rem;">{{ note.category.name }}</p>
+                    <p>Title: {{ note.title }}</p>
+                    <p>Note: {{ note.content }}</p>
+                    <div class="d-flex justify-content-between">
+                        <div class="d-flex flex-row align-items-center">
+                            <img src="/media/{{ note.image }}" alt="avatar" width="65"
+                                 height="65"/>
+
+                        </div>
+                        <div class="d-flex flex-row align-items-center">
+                            <a href="{% url 'edit_note' note.id %}" class="small text-muted mb-0">Edit</a>
+                            <p class="small text-muted mb-0">&nbsp&nbsp/&nbsp&nbsp</p>
+                            <a href="{% url 'delete_note' note.id %}">Delete</a>
+                        </div>
+                    </div>
+
+                </div><hr>
+                {% endfor %}
+            </div>
+    </div>
+</div>
+
+</div>
+
+</div>
+{% else %}
+<p>Nothing here! Please create some notes.</p>
+{% endif %}
+{% endblock %}

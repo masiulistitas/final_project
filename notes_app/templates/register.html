@@ -1,0 +1,16 @@
+{% extends "index.html" %}
+{% load bootstrap3 %}
+{% block content %}
+
+<div class="container py-5">
+	<h3>Register</h3>
+	<form method="POST">
+		{% csrf_token %}
+		{% bootstrap_form register_form  %}
+		    <br>
+		<button class="btn btn-primary" type="submit">Register</button>
+	</form>
+	<p class="text-center">If you already have an account, <a href="{% url 'login' %}">login</a> instead.</p>
+</div>
+
+{% endblock %}

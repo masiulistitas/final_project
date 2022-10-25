@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% block content %}
+
+<div class="container py-5">
+  <h3>Login</h3>
+  <form method="POST">
+    {% csrf_token %}
+		{% bootstrap_form login_form  %}
+    <br>
+    <button class="btn btn-primary" type="submit">Login</button>
+  </form>
+  <p class="text-center">Don't have an account? <a href="{% url 'register' %}">Create an account</a>.</p>
+  <p class="text-center">Forgot your password? <a href="{% url 'password_reset' %}">Recover your password</a>.</p>
+</div>
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% block content %}
+
+<div class="row d-flex justify-content-center" style="width: 95%; margin:0 auto;">
+
+    <div class=""><br>
+        <h4>Add some categories..</h4>
+        <div class="card shadow-0 border" style="background-color: #f0f2f5;">
+            <form action="" method="POST">
+                {% csrf_token %}
+                {{ form }}
+                <br>
+                <input type="submit" class="btn btn-primary">
+            </form>
+        </div>
+        <br>
+        <br>
+        <h5>List of categories:</h5>
+        {% if categories %}
+        {% for c in categories %}
+        <div class="card ">
+            <div class="card-body">
+                <p>{{ c.name }}</p>
+                <a style="margin-right: 30px;" href="{% url 'update_category' c.id %}">Edit</a>
+                <a href="{% url 'delete_category' c.id %}">Delete</a>
+            </div>
+        </div>
+        <br>
+        {% endfor %}
+        {% else %}
+        <p>Nothing here! Please create some categories.</p>
+        {% endif %}
+        <br>
+    </div>
+</div>
+</div>
+
+
+{% endblock %}
