@@ -15,6 +15,7 @@ from django.utils.encoding import force_bytes
 from django.contrib.auth.decorators import login_required
 from .models import Note, Category
 from .forms import NotesForm, CategoryForm
+from django.core.paginator import Paginator
 
 
 # Create your views here.
@@ -46,6 +47,9 @@ def add_note(request):
     notes = Note.objects.filter(user=request.user)
     categories = Category.objects.filter(user=request.user)
     form = NotesForm(user=request.user)
+    paginator = Paginator(Note.objects.filter(user=request.user), 5)
+    page_number = request.GET.get('page')
+    paged_notes = paginator.get_page(page_number)
 
     if request.method == 'POST':
         form = NotesForm(request.POST, request.FILES, user=request.user)
@@ -60,6 +64,7 @@ def add_note(request):
         'form': form,
         "notes": notes,
         "categories": categories,
+        'page_obj': paged_notes
 
     }
     return render(request, "notes.html", context=context)

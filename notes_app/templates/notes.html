@@ -24,8 +24,27 @@
             <br>
         {% if notes %}
             <h4>Your notes...</h4>
+        <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
             <div class="card mb-4" style="background-color:#F8F8FF;">
-                {% for note in notes %}
+
+                {% for note in page_obj %}
+
                 <div class="card-body">
                     <p class="small" style="font-size:0.8rem;">{{ note.category.name }}</p>
                     <p>Title: {{ note.title }}</p>
@@ -52,7 +71,9 @@
 </div>
 
 </div>
+
 {% else %}
 <p>Nothing here! Please create some notes.</p>
 {% endif %}
+
 {% endblock %}
